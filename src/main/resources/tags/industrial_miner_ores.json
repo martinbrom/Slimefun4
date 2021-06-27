@@ -3,7 +3,7 @@
 		"#slimefun:ores",
 		{
 			"id" : "minecraft:gilded_blackstone",
-			"required" : false
+			"since" : 16
 		}
 	]
 }

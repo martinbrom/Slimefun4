@@ -37,27 +37,27 @@
 		"minecraft:lantern",
 		{
 			"id" : "minecraft:soul_lantern",
-			"required" : false
+			"since" : 16
 		},
 		{
 			"id" : "minecraft:nether_sprouts",
-			"required" : false
+			"since" : 16
 		},
 		{
 			"id" : "minecraft:crimson_roots",
-			"required": false
+			"since" : 16
 		},
 		{
 			"id" : "minecraft:twisting_vines",
-			"required" : false
+			"since" : 16
 		},
 		{
 			"id" : "minecraft:warped_roots",
-			"required" : false
+			"since" : 16
 		},
 		{
 			"id" : "minecraft:weeping_vines",
-			"required" : false
+			"since" : 16
 		}
 	]
 }

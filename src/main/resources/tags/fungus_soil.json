@@ -3,15 +3,15 @@
         "#slimefun:dirt_variants",
         {
             "id" : "minecraft:soul_soil",
-            "required" : false
+            "since" : 16
         },
         {
             "id" : "minecraft:crimson_nylium",
-            "required" : false
+            "since" : 16
         },
         {
             "id" : "minecraft:warped_nylium",
-            "required" : false
+            "since" : 16
         }
     ]
 }

@@ -28,9 +28,11 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
 
+import io.github.thebusybiscuit.slimefun4.api.MinecraftVersion;
 import io.github.thebusybiscuit.slimefun4.api.exceptions.TagMisconfigurationException;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunPlugin;
 import io.github.thebusybiscuit.slimefun4.utils.PatternUtils;
+import io.papermc.lib.PaperLib;
 
 /**
  * The {@link TagParser} is responsible for parsing a JSON input into a {@link SlimefunTag}.
@@ -108,15 +110,16 @@ public class TagParser implements Keyed {
                 for (JsonElement element : values) {
                     if (element instanceof JsonPrimitive && ((JsonPrimitive) element).isString()) {
                         // Strings will be parsed directly
-                        parsePrimitiveValue(element.getAsString(), materials, tags, true);
+                        parsePrimitiveValue(element.getAsString(), materials, tags);
                     } else if (element instanceof JsonObject) {
                         /*
-                         * JSONObjects can have a "required" property which can
-                         * make it optional to resolve the underlying value
+                         * JSONObjects can have a "since" & "until" property which
+                         * will only resolve the underlying value if the current version
+                         * is >= or < (respectively) to the ones specified in the json
                          */
                         parseComplexValue(element.getAsJsonObject(), materials, tags);
                     } else {
-                        throw new TagMisconfigurationException(key, "Unexpected value format: " + element.getClass().getSimpleName() + " - " + element.toString());
+                        throw new TagMisconfigurationException(key, "Unexpected value format: " + element.getClass().getSimpleName() + " - " + element);
                     }
                 }
 
@@ -132,7 +135,7 @@ public class TagParser implements Keyed {
     }
 
     @ParametersAreNonnullByDefault
-    private void parsePrimitiveValue(String value, Set<Material> materials, Set<Tag<Material>> tags, boolean throwException) throws TagMisconfigurationException {
+    private void parsePrimitiveValue(String value, Set<Material> materials, Set<Tag<Material>> tags) throws TagMisconfigurationException {
         if (PatternUtils.MINECRAFT_MATERIAL.matcher(value).matches()) {
             // Match the NamespacedKey against Materials
             Material material = Material.matchMaterial(value);
@@ -140,7 +143,7 @@ public class TagParser implements Keyed {
             if (material != null) {
                 // If the Material could be matched, simply add it to our Set
                 materials.add(material);
-            } else if (throwException) {
+            } else {
                 throw new TagMisconfigurationException(key, "Minecraft Material '" + value + "' seems to not exist!");
             }
         } else if (PatternUtils.MINECRAFT_TAG.matcher(value).matches()) {
@@ -156,7 +159,7 @@ public class TagParser implements Keyed {
             } else if (blocksTag != null) {
                 // If no item tag exists, fall back to the block tag
                 tags.add(blocksTag);
-            } else if (throwException) {
+            } else {
                 // If both fail, then the tag does not exist.
                 throw new TagMisconfigurationException(key, "There is no '" + value + "' tag in Minecraft.");
             }
@@ -167,10 +170,10 @@ public class TagParser implements Keyed {
 
             if (tag != null) {
                 tags.add(tag);
-            } else if (throwException) {
+            } else {
                 throw new TagMisconfigurationException(key, "There is no '" + value + "' tag in Slimefun");
             }
-        } else if (throwException) {
+        } else {
             // If no RegEx pattern matched, it's malformed.
             throw new TagMisconfigurationException(key, "Could not recognize value '" + value + "'");
         }
@@ -179,17 +182,30 @@ public class TagParser implements Keyed {
     @ParametersAreNonnullByDefault
     private void parseComplexValue(JsonObject entry, Set<Material> materials, Set<Tag<Material>> tags) throws TagMisconfigurationException {
         JsonElement id = entry.get("id");
-        JsonElement required = entry.get("required");
+        JsonElement since = entry.get("since");
+        JsonElement until = entry.get("until");
 
         // Check if the entry contains elements of the correct type
-        if (id instanceof JsonPrimitive && ((JsonPrimitive) id).isString() && required instanceof JsonPrimitive && ((JsonPrimitive) required).isBoolean()) {
-            boolean isRequired = required.getAsBoolean();
+        if (id instanceof JsonPrimitive && ((JsonPrimitive) id).isString()) {
+            // TODO: 27.06.21 Resolve this crap
+            int majorVersion = PaperLib.getMinecraftVersion();
+//            MinecraftVersion version = SlimefunPlugin.getMinecraftVersion();
+            boolean sinceCheck = true;
+            boolean untilCheck = true;
 
-            /*
-             * If the Tag is required, an exception may be thrown.
-             * Otherwise it will just ignore the value
-             */
-            parsePrimitiveValue(id.getAsString(), materials, tags, isRequired);
+            if (since instanceof JsonPrimitive && ((JsonPrimitive) since).isNumber()) {
+                int sinceVersion = since.getAsInt();
+                sinceCheck = majorVersion >= sinceVersion;
+            }
+
+            if (until instanceof JsonPrimitive && ((JsonPrimitive) until).isNumber()) {
+                int untilVersion = until.getAsInt();
+                untilCheck = majorVersion < untilVersion;
+            }
+
+            if (sinceCheck && untilCheck) {
+                parsePrimitiveValue(id.getAsString(), materials, tags);
+            }
         } else {
             throw new TagMisconfigurationException(key, "Found a JSON Object value without an id!");
         }

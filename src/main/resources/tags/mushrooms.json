@@ -4,11 +4,11 @@
 		"minecraft:brown_mushroom",
 		{
 			"id" : "minecraft:crimson_fungus",
-			"required" : false
+			"since" : 16
 		},
 		{
 			"id" : "minecraft:warped_fungus",
-			"required" : false
+			"since" : 16
 		}
 	]
 }

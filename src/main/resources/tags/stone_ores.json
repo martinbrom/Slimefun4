@@ -4,7 +4,7 @@
         "minecraft:iron_ore",
         {
             "id" : "minecraft:copper_ore",
-            "required" : false
+            "since" : 17
         },
         "minecraft:gold_ore",
         "minecraft:redstone_ore",

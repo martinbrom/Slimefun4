@@ -4,7 +4,7 @@
 		"minecraft:redstone_torch",
 		{
 			"id" : "minecraft:soul_torch",
-			"required" : false
+			"since" : 16
 		}
 	]
 }

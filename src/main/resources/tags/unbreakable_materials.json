@@ -11,7 +11,7 @@
 		"minecraft:structure_void",
 		{
 			"id" : "minecraft:jigsaw",
-			"required" : false
+			"since" : 14
 		}
 	]
 }

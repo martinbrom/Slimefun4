@@ -6,11 +6,11 @@
 		"minecraft:netherrack",
 		{
 			"id" : "minecraft:blackstone",
-			"required" : false
+			"since" : 16
 		},
 		{
 			"id" : "minecraft:basalt",
-			"required" : false
+			"since" : 16
 		}
 	]
 }

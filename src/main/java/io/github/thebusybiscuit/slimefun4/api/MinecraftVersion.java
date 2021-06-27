@@ -134,9 +134,9 @@ public enum MinecraftVersion {
 
     /**
      * This method checks whether this {@link MinecraftVersion} is newer or equal to
-     * the given {@link MinecraftVersion},
+     * the given {@link MinecraftVersion}.
      * 
-     * An unknown version will default to {@literal false}.
+     * Any virtual version will default to {@literal false}.
      * 
      * @param version
      *            The {@link MinecraftVersion} to compare
@@ -146,17 +146,32 @@ public enum MinecraftVersion {
     public boolean isAtLeast(@Nonnull MinecraftVersion version) {
         Validate.notNull(version, "A Minecraft version cannot be null!");
 
-        if (this == UNKNOWN) {
+        return isAtLeast(version.majorVersion);
+    }
+
+    /**
+     * This method checks whether this {@link MinecraftVersion} is newer or equal to
+     * the given major version number.
+     *
+     * Any virtual version will default to {@literal false}.
+     *
+     * @param majorVersion
+     *            The major version number to compare
+     *
+     * @return Whether this {@link MinecraftVersion} is newer or equal to the given major version number
+     */
+    public boolean isAtLeast(int majorVersion) {
+        if (isVirtual()) {
             return false;
         }
 
-        return this.ordinal() >= version.ordinal();
+        return this.majorVersion >= majorVersion;
     }
 
     /**
      * This checks whether this {@link MinecraftVersion} is older than the specified {@link MinecraftVersion}.
-     * 
-     * An unknown version will default to {@literal true}.
+     *
+     * Any virtual version will default to {@literal false}.
      * 
      * @param version
      *            The {@link MinecraftVersion} to compare
@@ -166,11 +181,25 @@ public enum MinecraftVersion {
     public boolean isBefore(@Nonnull MinecraftVersion version) {
         Validate.notNull(version, "A Minecraft version cannot be null!");
 
-        if (this == UNKNOWN) {
+        return isBefore(version.majorVersion);
+    }
+
+    /**
+     * This checks whether this {@link MinecraftVersion} is older than the specified major version number.
+     *
+     * Any virtual version will default to {@literal false}.
+     *
+     * @param majorVersion
+     *            The major version number to compare
+     *
+     * @return Whether this {@link MinecraftVersion} is older than the given major version number
+     */
+    public boolean isBefore(int majorVersion) {
+        if (isVirtual()) {
             return true;
         }
 
-        return version.ordinal() > this.ordinal();
+        return this.majorVersion < majorVersion;
     }
 
 }

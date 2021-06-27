@@ -4,12 +4,8 @@
 		"minecraft:coarse_dirt",
 		"minecraft:grass_block",
 		{
-			"id": "minecraft:grass_path",
-			"required": false
-		},
-		{
 			"id": "minecraft:dirt_path",
-			"required": false
+			"since": 17
 		},
 		"minecraft:farmland",
 		"minecraft:podzol",

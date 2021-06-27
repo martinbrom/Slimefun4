@@ -2,7 +2,7 @@
 	"values" : [
 		{
 			"id" : "#minecraft:crops",
-			"required" : false
+			"since" : 15
 		},
 		"minecraft:beetroots",
 		"minecraft:carrots",

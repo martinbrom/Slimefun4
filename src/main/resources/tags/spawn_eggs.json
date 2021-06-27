@@ -2,12 +2,12 @@
     "values" : [
         {
             "id" : "minecraft:axolotl_spawn_egg",
-            "required" : false
+            "since" : 17
         },
         "minecraft:bat_spawn_egg",
         {
             "id" : "minecraft:bee_spawn_egg",
-            "required" : false
+            "since" : 15
         },
         "minecraft:blaze_spawn_egg",
         "minecraft:cave_spider_spawn_egg",
@@ -27,16 +27,16 @@
         "minecraft:ghast_spawn_egg",
         {
             "id" : "minecraft:glow_squid_spawn_egg",
-            "required" : false
+            "since" : 17
         },
         {
             "id" : "minecraft:goat_spawn_egg",
-            "required" : false
+            "since" : 17
         },
         "minecraft:guardian_spawn_egg",
         {
             "id" : "minecraft:hoglin_spawn_egg",
-            "required" : false
+            "since" : 16
         },
         "minecraft:horse_spawn_egg",
         "minecraft:husk_spawn_egg",
@@ -51,11 +51,11 @@
         "minecraft:pig_spawn_egg",
         {
             "id" : "minecraft:piglin_spawn_egg",
-            "required" : false
+            "since" : 16
         },
         {
             "id" : "minecraft:piglin_brute_spawn_egg",
-            "required" : false
+            "since" : 16
         },
         "minecraft:pillager_spawn_egg",
         "minecraft:polar_bear_spawn_egg",
@@ -74,7 +74,7 @@
         "minecraft:stray_spawn_egg",
         {
             "id" : "minecraft:strider_spawn_egg",
-            "required" : false
+            "since" : 16
         },
         "minecraft:trader_llama_spawn_egg",
         "minecraft:tropical_fish_spawn_egg",
@@ -88,18 +88,14 @@
         "minecraft:wolf_spawn_egg",
         {
             "id" : "minecraft:zoglin_spawn_egg",
-            "required" : false
+            "since" : 16
         },
         "minecraft:zombie_spawn_egg",
         "minecraft:zombie_horse_spawn_egg",
         "minecraft:zombie_villager_spawn_egg",
         {
             "id" : "minecraft:zombified_piglin_spawn_egg",
-            "required" : false
-        },
-        {
-            "id" : "minecraft:zombified_piglin_spawn_egg",
-            "required" : false
+            "since" : 16
         }
     ]
 }

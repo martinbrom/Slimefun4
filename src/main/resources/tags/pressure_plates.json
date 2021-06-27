@@ -6,7 +6,7 @@
 		"minecraft:heavy_weighted_pressure_plate",
 		{
 			"id" : "minecraft:polished_blackstone_pressure_plate",
-			"required" : false
+			"since" : 16
 		}
     ]
 }
